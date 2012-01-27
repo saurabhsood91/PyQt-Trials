@@ -1,14 +1,14 @@
 from PyQt4 import QtCore,QtGui		#import required PyQt libraries
 from txtedit import Ui_MainWindow	#import the UI file compiled with pyuic4
 import sys				#for command line args that QApplication constructor needs
-
+import codecs
 class textedit(QtGui.QMainWindow):				#create a class that inherits from QMainWindow or Top Level Container
 
 	def readFile(self):
 		dialog=QtGui.QFileDialog(self)			#create a File Dialog
 		self.fileName=dialog.getOpenFileName()		#Open the File Dialog, and get the filename, or get None
 		if(self.fileName<>None and self.fileName<>""):	#if the filename is not null, then open and read its contents
-			fileData=open(self.fileName).read()
+			fileData=codecs.open(self.fileName,'r','utf-8').read()
 			self.ui.textWindow.setText(fileData)
 		else:
 			print 'Error\n'				#if no file is selected, print error
@@ -17,8 +17,8 @@ class textedit(QtGui.QMainWindow):				#create a class that inherits from QMainWi
 		dialog=saveFileName=QtGui.QFileDialog(self)
 		self.saveName=dialog.getSaveFileName()
 		if(self.saveName<>None and self.saveName<>""):
-			file=open(self.saveName,'w')
-			file.write(self.ui.textWindow.toPlainText())
+			file=codecs.open(self.saveName,'w','utf-8')
+			file.write(unicode((self.ui.textWindow.toPlainText())))
 
 	def __init__(self,parent=None):				#constructor. It has no parent by default, as it is a top level window
 		QtGui.QWidget.__init__(self,parent)		
