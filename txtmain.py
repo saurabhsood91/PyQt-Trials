@@ -12,12 +12,20 @@ class textedit(QtGui.QMainWindow):				#create a class that inherits from QMainWi
 			self.ui.textWindow.setText(fileData)
 		else:
 			print 'Error\n'				#if no file is selected, print error
+	
+	def saveFile(self):
+		dialog=saveFileName=QtGui.QFileDialog(self)
+		self.saveName=dialog.getSaveFileName()
+		if(self.saveName<>None and self.saveName<>""):
+			file=open(self.saveName,'w')
+			file.write(self.ui.textWindow.toPlainText())
 
 	def __init__(self,parent=None):				#constructor. It has no parent by default, as it is a top level window
 		QtGui.QWidget.__init__(self,parent)		
 		self.ui=Ui_MainWindow()				#call constructor for the Ui_MainWindow, which is pyuic4 compiled class
 		self.ui.setupUi(self)				#setup the ui
 		QtCore.QObject.connect(self.ui.buttonOpen,QtCore.SIGNAL('clicked()'),self.readFile)
+		QtCore.QObject.connect(self.ui.buttonSave,QtCore.SIGNAL('clicked()'),self.saveFile)
 
 if __name__=="__main__":
 	app=QtGui.QApplication(sys.argv)
