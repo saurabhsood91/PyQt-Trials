@@ -1,4 +1,5 @@
 #!/usr/bin/python
+#A Simple Wakeup App
 
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
